@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer className="bg-[#0d221d] text-[#dfe8e5] dark:bg-[#0d1117] dark:text-[#a7bdb6]">
-      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 lg:grid-cols-[1.1fr_0.7fr_0.8fr] lg:px-10">
+      <div className="mx-auto grid max-w-7xl gap-8 px-6 py-10 lg:grid-cols-[1.1fr_0.7fr_0.8fr] lg:px-10">
         <div>
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#d8ba60] text-sm font-bold text-[#163a2e] dark:bg-[#d8ba60] dark:text-[#0d1117]">
@@ -45,7 +45,7 @@ export default function Footer() {
             <li>
               <a
                 href="mailto:matthewsrickypro@gmail.com"
-                className="hover:text-[#d8ba60] transition"
+                className="transition hover:text-[#d8ba60]"
               >
                 matthewsrickypro@gmail.com
               </a>
@@ -56,9 +56,11 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-[#1a3d35] dark:border-[#2d564b]">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 text-sm text-[#a7bdb6] lg:px-10">
+        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-6 py-3 text-[11px] text-[#a7bdb6] sm:flex-row sm:items-center sm:justify-between lg:px-10">
           <p>© 2026 Kivutha & Opiyo Advocates. All rights reserved.</p>
-          <p>Privacy Policy • Terms of Service</p>
+          <p className="text-[#d8ba60]">
+            Website built by Ricky Matthews Githinji.
+          </p>
         </div>
       </div>
     </footer>

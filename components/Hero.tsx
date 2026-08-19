@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-[radial-gradient(circle_at_top,_rgba(216,186,96,0.14),_transparent_28%),linear-gradient(135deg,_#f7f1e2_0%,_#fffaf4_45%,_#edf4ef_100%)] dark:bg-[radial-gradient(circle_at_top,_rgba(216,186,96,0.08),_transparent_28%),linear-gradient(135deg,_#0d1117_0%,_#1a3d35_45%,_#0d1117_100%)]">
@@ -57,55 +59,27 @@ export default function Hero() {
           <div className="absolute -left-10 top-10 h-36 w-36 rounded-full bg-[#d8ba60]/40 blur-3xl dark:bg-[#d8ba60]/20" />
           <div className="absolute -right-4 bottom-8 h-40 w-40 rounded-full bg-[#c7e0d5]/60 blur-3xl dark:bg-[#1a3d35]/40" />
 
-          <div className="relative rounded-[2rem] border border-[#dfe5df] bg-white p-6 shadow-[0_30px_80px_rgba(13,34,29,0.12)] dark:border-[#3d6a5e] dark:bg-[#1a3d35] dark:shadow-[0_30px_80px_rgba(0,0,0,0.5)]">
-            <div className="rounded-[1.5rem] bg-[#163a2e] p-5 text-white dark:bg-[#0d1117]">
-              <div className="flex items-center justify-between">
-                <p className="text-sm font-medium text-[#dfe8e5]">
-                  Case overview
-                </p>
-                <span className="rounded-full bg-[#d8ba60]/20 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#f5de93]">
-                  Active
-                </span>
-              </div>
-
-              <div className="mt-8 space-y-6">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.2em] text-[#d9e7e3]">
-                    Matter type
+          <div className="relative overflow-hidden rounded-[2rem] border border-[#dfe5df] bg-white p-3 shadow-[0_30px_80px_rgba(13,34,29,0.12)] dark:border-[#3d6a5e] dark:bg-[#1a3d35] dark:shadow-[0_30px_80px_rgba(0,0,0,0.5)]">
+            <div className="relative h-[540px] overflow-hidden rounded-[1.5rem]">
+              <Image
+                src="/Law2.jpg"
+                alt="Legal counsel review and consultation"
+                fill
+                priority
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0f1f1a]/85 via-[#0f1f1a]/20 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-6">
+                <div className="rounded-2xl border border-white/20 bg-[#163a2e]/75 p-4 backdrop-blur-sm">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#f5de93]">
+                    Trusted legal counsel
                   </p>
-                  <p className="mt-2 text-xl font-semibold">
-                    Business advisory
-                  </p>
-                </div>
-                <div>
-                  <p className="text-xs uppercase tracking-[0.2em] text-[#d9e7e3]">
-                    Status
-                  </p>
-                  <p className="mt-2 text-xl font-semibold">
-                    Strategy review in progress
+                  <p className="mt-2 text-lg font-semibold text-white">
+                    Dedicated advocacy for business, family, and property
+                    matters.
                   </p>
                 </div>
               </div>
-            </div>
-
-            <div className="mt-6 rounded-[1.5rem] border border-[#dfe5df] bg-[#f6f1e8] p-5 dark:border-[#3d6a5e] dark:bg-[#0d1117]">
-              <p className="text-sm font-semibold text-[#163a2e] dark:text-[#dfe8e5]">
-                Why clients choose us
-              </p>
-              <ul className="mt-4 space-y-3 text-sm text-[#4d6761] dark:text-[#d9e7e3]">
-                <li className="flex items-center gap-3">
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#d8ba60]" />
-                  Clear communication
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#d8ba60]" />
-                  Practical legal strategy
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#d8ba60]" />
-                  Responsive support from day one
-                </li>
-              </ul>
             </div>
           </div>
         </div>

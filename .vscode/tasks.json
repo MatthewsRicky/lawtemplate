@@ -1,0 +1,18 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "resend-verification",
+      "type": "shell",
+      "command": "node",
+      "args": [
+        "-e",
+        "const fs=require('fs'); const env={}; for (const line of fs.readFileSync('.env.local','utf8').split(/\\r?\\n/)) { const m=line.match(/^([^#=]+)=(.*)$/); if (m) env[m[1]] = m[2].trim(); } const { Resend } = require('resend'); const resend = new Resend(env.RESEND_API_KEY); resend.emails.send({ from: env.RESEND_FROM_EMAIL, to: env.CONTACT_TO_EMAIL, subject: 'Test delivery', replyTo: 'test@example.com', text: 'Hello from verification' }).then((r) => { console.log(JSON.stringify({ ok: true, id: r.id }, null, 2)); }).catch((e) => { console.log(JSON.stringify({ ok: false, error: String(e) }, null, 2)); process.exit(1); });"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

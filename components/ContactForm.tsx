@@ -15,6 +15,7 @@ export default function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitStatus("idle");
     setIsSubmitting(true);
 
     try {
@@ -24,9 +25,9 @@ export default function ContactForm() {
         practiceArea,
         message,
       });
+
       if (result.success) {
         setSubmitStatus("success");
-        // Reset form
         setFullName("");
         setEmail("");
         setPracticeArea("Business Law");
@@ -111,8 +112,8 @@ export default function ContactForm() {
 
       {submitStatus === "success" && (
         <p className="mt-4 text-sm text-green-600 dark:text-green-400">
-          Email client opened! Your inquiry will be sent to
-          matthewsrickypro@gmail.com
+          Your inquiry has been sent successfully. We&apos;ll get back to you
+          soon.
         </p>
       )}
       {submitStatus === "error" && (

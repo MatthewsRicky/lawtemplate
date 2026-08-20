@@ -24,10 +24,7 @@ export default function ContactForm() {
         practiceArea,
         message,
       });
-
-      if (result.success && result.mailtoLink) {
-        // Open mailto link to send email
-        window.location.href = result.mailtoLink;
+      if (result.success) {
         setSubmitStatus("success");
         // Reset form
         setFullName("");
@@ -35,6 +32,7 @@ export default function ContactForm() {
         setPracticeArea("Business Law");
         setMessage("");
       } else {
+        console.error("Send error:", result.error);
         setSubmitStatus("error");
       }
     } catch (error) {

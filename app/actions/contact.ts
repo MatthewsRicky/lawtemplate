@@ -6,16 +6,45 @@ export async function sendContactForm(formData: {
   practiceArea: string;
   message: string;
 }) {
-  try {
-    // Using mailto link approach - the form will construct a mailto URL
-    // For production, you'd integrate with a service like SendGrid, Mailgun, or Resend
-    const mailtoLink = `mailto:matthewsrickypro@gmail.com?subject=Legal Inquiry - ${encodeURIComponent(formData.practiceArea)}&body=${encodeURIComponent(
-      `Name: ${formData.fullName}\nEmail: ${formData.email}\nPractice Area: ${formData.practiceArea}\n\nMessage:\n${formData.message}`,
-    )}`;
+  const RESEND_API_KEY = process.env.RESEND_API_KEY;
+  const RESEND_FROM_EMAIL =
+    process.env.RESEND_FROM_EMAIL || "no-reply@example.com";
+  const CONTACT_TO_EMAIL =
+    process.env.CONTACT_TO_EMAIL || "matthewsrickypro@gmail.com";
 
-    return { success: true, mailtoLink };
+  if (!RESEND_API_KEY) {
+    console.error("Missing RESEND_API_KEY environment variable");
+    return { success: false, error: "Email service not configured" };
+  }
+
+  try {
+    const resp = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+      },
+      body: JSON.stringify({
+        from: RESEND_FROM_EMAIL,
+        to: [CONTACT_TO_EMAIL],
+        subject: `Legal Inquiry - ${formData.practiceArea}`,
+        text: `Name: ${formData.fullName}\nEmail: ${formData.email}\nPractice Area: ${formData.practiceArea}\n\nMessage:\n${formData.message}`,
+        html: `<p><strong>Name:</strong> ${formData.fullName}</p><p><strong>Email:</strong> ${formData.email}</p><p><strong>Practice Area:</strong> ${formData.practiceArea}</p><p><strong>Message:</strong></p><p>${String(formData.message).replace(/\n/g, "<br>")}</p>`,
+        headers: {
+          "Reply-To": formData.email,
+        },
+      }),
+    });
+
+    if (!resp.ok) {
+      const text = await resp.text();
+      console.error("Resend API error:", resp.status, text);
+      return { success: false, error: "Email service error" };
+    }
+
+    return { success: true };
   } catch (error) {
-    console.error("Error preparing contact form:", error);
-    return { success: false, error: "Failed to process form" };
+    console.error("Error sending contact form:", error);
+    return { success: false, error: "Failed to send email" };
   }
 }

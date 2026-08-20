@@ -1,4 +1,5 @@
 "use server";
+import { Resend } from "resend";
 
 export async function sendContactForm(formData: {
   fullName: string;
@@ -17,32 +18,21 @@ export async function sendContactForm(formData: {
     return { success: false, error: "Email service not configured" };
   }
 
+  const resend = new Resend(RESEND_API_KEY);
+
   try {
-    const resp = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-      },
-      body: JSON.stringify({
-        from: RESEND_FROM_EMAIL,
-        to: [CONTACT_TO_EMAIL],
-        subject: `Legal Inquiry - ${formData.practiceArea}`,
-        text: `Name: ${formData.fullName}\nEmail: ${formData.email}\nPractice Area: ${formData.practiceArea}\n\nMessage:\n${formData.message}`,
-        html: `<p><strong>Name:</strong> ${formData.fullName}</p><p><strong>Email:</strong> ${formData.email}</p><p><strong>Practice Area:</strong> ${formData.practiceArea}</p><p><strong>Message:</strong></p><p>${String(formData.message).replace(/\n/g, "<br>")}</p>`,
-        headers: {
-          "Reply-To": formData.email,
-        },
-      }),
+    const data = await resend.emails.send({
+      from: RESEND_FROM_EMAIL,
+      to: CONTACT_TO_EMAIL,
+      subject: `Legal Inquiry - ${formData.practiceArea}`,
+      replyTo: String(formData.email),
+      text: `Name: ${formData.fullName}\nEmail: ${formData.email}\nPractice Area: ${formData.practiceArea}\n\nMessage:\n${formData.message}`,
+      html: `<p><strong>Name:</strong> ${formData.fullName}</p><p><strong>Email:</strong> ${formData.email}</p><p><strong>Practice Area:</strong> ${formData.practiceArea}</p><p><strong>Message:</strong></p><p>${String(
+        formData.message,
+      ).replace(/\n/g, "<br>")}</p>`,
     });
 
-    if (!resp.ok) {
-      const text = await resp.text();
-      console.error("Resend API error:", resp.status, text);
-      return { success: false, error: "Email service error" };
-    }
-
-    return { success: true };
+    return { success: true, data };
   } catch (error) {
     console.error("Error sending contact form:", error);
     return { success: false, error: "Failed to send email" };
